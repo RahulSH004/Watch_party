@@ -2,6 +2,7 @@ import express from 'express';
 import {createServer} from 'http';
 import {Server} from 'socket.io';
 import cors from 'cors';
+import { socketHandler } from './src/socketHandler';
 
 const PORT = process.env.PORT || 3000;
 
@@ -16,6 +17,7 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
     console.log('user is connected');
+    socketHandler(io, socket);
 
     socket.on('disconnect', () => {
         console.log('user is disconnected');

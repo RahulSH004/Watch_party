@@ -5,11 +5,20 @@ import './App.css'
 
 function App() {
   
-  const socketref = useRef<Socket | null>(null);
+  const socketRef = useRef<Socket | null>(null);
   useEffect(() => {
-    socketref.current = io('http://localhost:3000');
+      socketRef.current = io('http://localhost:3000');
+  
+  // Test: connect hote hi turant create_room bhejo
+      socketRef.current.emit('create_room', { username: 'Rahul' });
+  
+  // Response sunno
+      socketRef.current.on('room_created', (data) => {
+        console.log('Room created:', data);
+      });
+  
     return () => {
-      socketref.current?.disconnect();
+      socketRef.current?.disconnect();
     }
   }, [])
 
