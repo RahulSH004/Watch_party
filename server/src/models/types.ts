@@ -9,7 +9,7 @@ export interface Participant {
 
 export interface Room {
     roomId: string;
-    hostId: string;
+    hostId: string | null;
     participants: Map<string, Participant>;
     state: {
         videoId: string | null;

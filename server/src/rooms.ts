@@ -3,11 +3,11 @@ import {Room , Participant} from './models/types';
 
 const rooms = new Map<string, Room>();
 
-export function createRoom(hostSocketId: string, hostUername: string): Room{
+export function createRoom(hostSocketId: string, hostUsername: string): Room{
     const roomId = nanoid(8);
     const host: Participant ={
         userId: hostSocketId,
-        username: hostUername,
+        username: hostUsername,
         role: 'HOST'
     }
     const room: Room = {
@@ -25,4 +25,25 @@ export function createRoom(hostSocketId: string, hostUername: string): Room{
 }
 export function getRoom(roomId: string): Room | null{
     return rooms.get(roomId) ?? null;
+}
+
+export function remvoeParticipant(roomId: string, userId: string): Room | null{
+    const room = rooms.get(roomId);
+    if(!room){
+        return null;
+    }
+    room.participants.delete(userId);
+    if(room.hostId === userId){
+        room.hostId = null;
+    }
+    if(room.participants.size === 0){
+        rooms.delete(roomId);
+        return null;
+    }
+    return room;
+}
+
+export function deleteRoom(roomId: string): boolean{
+    rooms.delete(roomId);
+    return true;
 }

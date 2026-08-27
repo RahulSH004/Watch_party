@@ -1,6 +1,6 @@
 import {Socket, Server} from 'socket.io';
 import {Participant} from './models/types';
-import {createRoom, getRoom} from './rooms';
+import {createRoom, getRoom, remvoeParticipant} from './rooms';
 
 export function socketHandler(io: Server, socket: Socket){
     socket.on('create_room', ({username}: {username: string}) => {
@@ -34,4 +34,30 @@ export function socketHandler(io: Server, socket: Socket){
             participants: [...room.participants.values()]
         });
     })
+    socket.on('leave_room', ({roomId}: {roomId: string}) => {
+        const updateRoom = remvoeParticipant(roomId,socket.id)
+        socket.leave(roomId);
+        socket.data.roomId = null;
+        if(updateRoom){
+            io.to(roomId).emit('user_left', {
+                userId: socket.id,
+                participants: [...updateRoom.participants.values()],
+                hostId: updateRoom.hostId
+            })
+        }
+    })
+    socket.on('disconnect', () => {
+    const roomId = socket.data.roomId;
+    if (!roomId) return;  // user kisi room mein tha hi nahi
+  
+    const updatedRoom = remvoeParticipant(roomId, socket.id);
+  
+    if (updatedRoom) {
+    io.to(roomId).emit('user_left', {
+        userId: socket.id,
+        participants: [...updatedRoom.participants.values()],
+        hostId: updatedRoom.hostId
+        });
+        }
+    });
 }
