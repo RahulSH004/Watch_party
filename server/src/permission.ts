@@ -5,6 +5,12 @@ const ROLE_PERMISSIONS: Record<Role, string[]> = {
   MODERATOR: ['playback'],
   PARTICIPANT: []
 };
+const actionPermissions: Record<string, string[]> = {
+  PLAY: ['playback'],
+  PAUSE: ['playback'],
+  SEEK: ['playback'],
+  CLOSE_ROOM: ['manage_room']
+};
 
 export function hasPermission(role: Role, permission: string): boolean {
   return ROLE_PERMISSIONS[role].includes(permission);
