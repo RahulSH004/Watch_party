@@ -3,6 +3,8 @@ import {createServer} from 'http';
 import {Server} from 'socket.io';
 import cors from 'cors';
 import { socketHandler } from './src/socketHandler';
+import { rbacController } from './src/rbacController';
+import { playbackController } from './src/playback_controller';
 
 const PORT = process.env.PORT || 3000;
 
@@ -18,6 +20,8 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
     console.log('user is connected');
     socketHandler(io, socket);
+    playbackController(io, socket);
+    rbacController(io, socket);
 
     socket.on('disconnect', () => {
         console.log('user is disconnected');
