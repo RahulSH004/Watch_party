@@ -13,3 +13,11 @@ export function hasPermission(role: Role, permission: string): boolean {
 export function getPermissions(role: Role): string[] {
   return ROLE_PERMISSIONS[role];
 }
+
+export function canControlPlayback(role: Role): boolean {
+    return role === 'HOST' || role === 'MODERATOR';
+}
+
+export function canManageRoom(role: Role): boolean {
+    return role === 'HOST';
+}

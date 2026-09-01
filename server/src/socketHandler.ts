@@ -1,11 +1,13 @@
 import {Socket, Server} from 'socket.io';
 import {Participant} from './models/types';
-import {createRoom, getRoom, remvoeParticipant} from './rooms';
+import {createRoom, deleteRoom, getRoom, remvoeParticipant} from './rooms';
+import { canManageRoom } from './permission';
 
 export function socketHandler(io: Server, socket: Socket){
     socket.on('create_room', ({username}: {username: string}) => {
         const room = createRoom(socket.id, username);
         socket.join(room.roomId);
+        socket.data.roomId = room.roomId;
         socket.emit('room_created', 
             {
                 roomId: room.roomId,
@@ -27,6 +29,7 @@ export function socketHandler(io: Server, socket: Socket){
         }
         room.participants.set(socket.id, participant);
         socket.join(room.roomId);
+        socket.data.roomId = room.roomId;
         io.to(room.roomId).emit('user_joined', {
             userId: socket.id,
             username,
@@ -60,4 +63,18 @@ export function socketHandler(io: Server, socket: Socket){
         });
         }
     });
+    socket.on('close_room', ({roomId}: {roomId: string}) => {
+        const room = getRoom(roomId);
+        if(!room){
+            socket.emit('error', {message: 'Room not found'});
+            return;
+        }
+        const participant = room.participants.get(socket.id);
+        if(!participant || !canManageRoom(participant.role)){
+            socket.emit('error', {message: 'Only host can close the room'});
+            return;
+        }
+        io.to(roomId).emit('room_closed', {message: "'Host has ended the party"});
+        deleteRoom(roomId);
+    })
 }
