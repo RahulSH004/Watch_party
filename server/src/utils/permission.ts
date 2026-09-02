@@ -1,4 +1,4 @@
-import { Role }  from './models/types'; 
+import { Role }  from '../models/types'; 
 
 export function canControlPlayback(role: Role): boolean {
     return role === 'HOST' || role === 'MODERATOR';

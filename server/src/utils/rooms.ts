@@ -1,9 +1,9 @@
 import {nanoid} from 'nanoid';
-import {Room , Participant} from './models/types';
+import {Room , Participant} from '../models/types';
 
 const rooms = new Map<string, Room>();
 
-export function createRoom(hostSocketId: string, hostUsername: string): Room{
+export function createRoom(hostSocketId: string, hostUsername: string, roomName: string): Room{
     const roomId = nanoid(8);
     const host: Participant ={
         userId: hostSocketId,
@@ -12,6 +12,7 @@ export function createRoom(hostSocketId: string, hostUsername: string): Room{
     }
     const room: Room = {
         roomId,
+        roomName,
         hostId: hostSocketId,
         participants: new Map([[hostSocketId, host]]),
         state: {

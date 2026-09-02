@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io";
-import { getRoom } from "./rooms";
-import { canControlPlayback } from "./permission";
+import { getRoom } from "./utils/rooms";
+import { canControlPlayback } from "./utils/permission";
 import { Participant, Room } from "./models/types";
 
 

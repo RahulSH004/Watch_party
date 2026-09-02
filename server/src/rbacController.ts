@@ -1,7 +1,7 @@
 import { Server, Socket } from "socket.io";
-import { getRoom } from "./rooms";
+import { getRoom } from "./utils/rooms";
 import type { Role } from "./models/types";
-import { canManageRoom } from "./permission";
+import { canManageRoom } from "./utils/permission";
 
 export function rbacController(io: Server, socket: Socket) {
   socket.on(

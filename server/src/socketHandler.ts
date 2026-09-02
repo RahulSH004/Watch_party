@@ -1,11 +1,11 @@
 import {Socket, Server} from 'socket.io';
 import {Participant} from './models/types';
-import {createRoom, deleteRoom, getRoom, remvoeParticipant} from './rooms';
-import { canManageRoom } from './permission';
+import {createRoom, deleteRoom, getRoom, remvoeParticipant} from './utils/rooms';
+import { canManageRoom } from './utils/permission';
 
 export function socketHandler(io: Server, socket: Socket){
-    socket.on('create_room', ({username}: {username: string}) => {
-        const room = createRoom(socket.id, username);
+    socket.on('create_room', ({username, roomName}: {username: string, roomName: string}) => {
+        const room = createRoom(socket.id, username, roomName);
         socket.join(room.roomId);
         socket.data.roomId = room.roomId;
         socket.emit('room_created', 
