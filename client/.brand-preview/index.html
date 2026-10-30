@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Watch Party — brand palette picker</title>
+  <style>
+    :root { font-family: Inter, ui-sans-serif, system-ui, sans-serif; color-scheme: light; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #ede9e2; color: #24211f; }
+    .topbar { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; gap: 16px; align-items: center; padding: 18px 24px; background: rgba(237,233,226,.88); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(36,33,31,.12); }
+    h1, h2, p { margin: 0; }
+    .topbar h1 { font-size: 15px; letter-spacing: -.02em; }
+    .topbar p, .hint { margin-top: 4px; font-size: 13px; color: #6d6862; }
+    button { font: inherit; cursor: pointer; }
+    .toggle { min-height: 40px; padding: 8px 14px; border: 1px solid rgba(36,33,31,.18); border-radius: 999px; background: transparent; color: inherit; }
+    .container { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; display: grid; gap: 32px; }
+    .palette { overflow: hidden; border: 1px solid color-mix(in oklch, var(--fg) 14%, transparent); border-radius: 20px; background: var(--bg); color: var(--fg); box-shadow: 0 12px 30px rgba(36,33,31,.08); }
+    .palette-header { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 24px 16px; border-bottom: 1px solid color-mix(in oklch, var(--fg) 14%, transparent); }
+    .palette-header h2 { font-size: 21px; letter-spacing: -.03em; }
+    .number { display: inline-grid; place-items: center; width: 30px; height: 30px; margin-right: 10px; border-radius: 50%; background: var(--primary); color: var(--primary-fg); font-size: 13px; font-weight: 700; vertical-align: 2px; }
+    .vibe { font-size: 12px; color: color-mix(in oklch, var(--fg) 66%, transparent); white-space: nowrap; }
+    .swatches { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: color-mix(in oklch, var(--fg) 14%, transparent); }
+    .swatch { min-height: 74px; position: relative; background: var(--color); }
+    .swatch span { position: absolute; right: 7px; bottom: 6px; left: 7px; padding: 4px; background: rgba(0,0,0,.3); color: white; text-align: center; font: 10px ui-monospace, monospace; border-radius: 4px; }
+    .ui { display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; padding: 24px; }
+    .eyebrow { color: var(--primary); font: 11px ui-monospace, monospace; letter-spacing: .12em; text-transform: uppercase; }
+    .headline { margin-top: 8px; font-size: 29px; line-height: 1.04; letter-spacing: -.05em; }
+    .body { max-width: 38ch; margin-top: 10px; color: color-mix(in oklch, var(--fg) 76%, transparent); font-size: 14px; line-height: 1.55; }
+    .buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .btn { min-height: 40px; padding: 9px 14px; border-radius: 10px; border: 1px solid var(--primary); font-size: 13px; font-weight: 650; }
+    .btn-primary { background: var(--primary); color: var(--primary-fg); }
+    .btn-secondary { background: transparent; color: var(--fg); border-color: color-mix(in oklch, var(--fg) 20%, transparent); }
+    .card { align-self: center; padding: 18px; border: 1px solid color-mix(in oklch, var(--fg) 14%, transparent); border-radius: 14px; background: var(--card); }
+    .card-label { color: color-mix(in oklch, var(--fg) 62%, transparent); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
+    .card-value { margin-top: 12px; font-size: 26px; letter-spacing: -.04em; }
+    .card-sub { margin-top: 4px; color: var(--primary); font-size: 12px; }
+    .contrast { display: flex; flex-wrap: wrap; gap: 16px; padding: 14px 24px; border-top: 1px solid color-mix(in oklch, var(--fg) 14%, transparent); color: color-mix(in oklch, var(--fg) 67%, transparent); font-size: 12px; }
+    .contrast span::before { content: "✓ "; color: #16835b; font-weight: 800; }
+    .footer { padding: 8px; color: #6d6862; text-align: center; font-size: 14px; }
+    @media (max-width: 700px) { .topbar { align-items: flex-start; } .ui { grid-template-columns: 1fr; } .vibe { white-space: normal; text-align: right; } }
+    html[data-theme="dark"] body { background: #171615; color: #f4eee6; }
+    html[data-theme="dark"] .topbar { background: rgba(23,22,21,.88); border-color: rgba(244,238,230,.14); }
+    html[data-theme="dark"] .topbar p, html[data-theme="dark"] .hint, html[data-theme="dark"] .footer { color: #aaa19a; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div><h1>Brand palette — Watch Party</h1><p>Premium, calm social watching with friends</p></div>
+    <button class="toggle" id="theme-toggle">Switch to dark</button>
+  </header>
+  <main class="container">
+    <p class="hint">Six directions for a landing page that feels editorial and welcoming. Pick one, or ask for a variation.</p>
+
+    <section class="palette" style="--bg:#faf8f3;--card:#fff;--fg:#1f1a15;--primary:#9e4c2c;--primary-fg:#fff;--colors:#faf8f3,#fff,#9e4c2c,#d58565,#1f1a15">
+      <div class="palette-header"><h2><span class="number">1</span>Ivory Linen</h2><p class="vibe">warm · minimal · premium</p></div>
+      <div class="swatches"><div class="swatch" style="--color:#faf8f3"><span>#FAF8F3</span></div><div class="swatch" style="--color:#fff"><span>#FFFFFF</span></div><div class="swatch" style="--color:#9e4c2c"><span>#9E4C2C</span></div><div class="swatch" style="--color:#d58565"><span>#D58565</span></div><div class="swatch" style="--color:#1f1a15"><span>#1F1A15</span></div></div>
+      <div class="ui"><div><p class="eyebrow">A room for everyone</p><h3 class="headline">The best part is watching together.</h3><p class="body">Start a room, share the link, and settle in. Your playbacks stay perfectly in sync.</p><div class="buttons"><button class="btn btn-primary">Create a room</button><button class="btn btn-secondary">How it works</button></div></div><div class="card"><p class="card-label">Friends watching now</p><p class="card-value">2,408 rooms</p><p class="card-sub">● Live right now</p></div></div><div class="contrast"><span>Text 12.9:1</span><span>Primary 5.2:1</span><span>Surface 18.1:1</span></div>
+    </section>
+
+    <section class="palette" style="--bg:#fcf5ec;--card:#fff;--fg:#241812;--primary:#b94f32;--primary-fg:#fff;--colors:#fcf5ec,#fff,#b94f32,#efa487,#241812">
+      <div class="palette-header"><h2><span class="number">2</span>Peach Cinema</h2><p class="vibe">soft · friendly · expressive</p></div>
+      <div class="swatches"><div class="swatch" style="--color:#fcf5ec"><span>#FCF5EC</span></div><div class="swatch" style="--color:#fff"><span>#FFFFFF</span></div><div class="swatch" style="--color:#b94f32"><span>#B94F32</span></div><div class="swatch" style="--color:#efa487"><span>#EFA487</span></div><div class="swatch" style="--color:#241812"><span>#241812</span></div></div>
+      <div class="ui"><div><p class="eyebrow">A room for everyone</p><h3 class="headline">The best part is watching together.</h3><p class="body">Start a room, share the link, and settle in. Your playbacks stay perfectly in sync.</p><div class="buttons"><button class="btn btn-primary">Create a room</button><button class="btn btn-secondary">How it works</button></div></div><div class="card"><p class="card-label">Friends watching now</p><p class="card-value">2,408 rooms</p><p class="card-sub">● Live right now</p></div></div><div class="contrast"><span>Text 14.5:1</span><span>Primary 5.1:1</span><span>Surface 18.7:1</span></div>
+    </section>
+
+    <section class="palette" style="--bg:#f6f2ea;--card:#fff;--fg:#1f1b14;--primary:#6b5a47;--primary-fg:#fff;--colors:#f6f2ea,#fff,#6b5a47,#b8a188,#1f1b14">
+      <div class="palette-header"><h2><span class="number">3</span>Quiet Club</h2><p class="vibe">premium · calm · understated</p></div>
+      <div class="swatches"><div class="swatch" style="--color:#f6f2ea"><span>#F6F2EA</span></div><div class="swatch" style="--color:#fff"><span>#FFFFFF</span></div><div class="swatch" style="--color:#6b5a47"><span>#6B5A47</span></div><div class="swatch" style="--color:#b8a188"><span>#B8A188</span></div><div class="swatch" style="--color:#1f1b14"><span>#1F1B14</span></div></div>
+      <div class="ui"><div><p class="eyebrow">A room for everyone</p><h3 class="headline">The best part is watching together.</h3><p class="body">Start a room, share the link, and settle in. Your playbacks stay perfectly in sync.</p><div class="buttons"><button class="btn btn-primary">Create a room</button><button class="btn btn-secondary">How it works</button></div></div><div class="card"><p class="card-label">Friends watching now</p><p class="card-value">2,408 rooms</p><p class="card-sub">● Live right now</p></div></div><div class="contrast"><span>Text 13.8:1</span><span>Primary 5.5:1</span><span>Surface 18.3:1</span></div>
+    </section>
+
+    <section class="palette" style="--bg:#f5f5f7;--card:#fff;--fg:#20222a;--primary:#4f55a6;--primary-fg:#fff;--colors:#f5f5f7,#fff,#4f55a6,#9a9fdf,#20222a">
+      <div class="palette-header"><h2><span class="number">4</span>Afterglow Violet</h2><p class="vibe">calm · modern · connective</p></div>
+      <div class="swatches"><div class="swatch" style="--color:#f5f5f7"><span>#F5F5F7</span></div><div class="swatch" style="--color:#fff"><span>#FFFFFF</span></div><div class="swatch" style="--color:#4f55a6"><span>#4F55A6</span></div><div class="swatch" style="--color:#9a9fdf"><span>#9A9FDF</span></div><div class="swatch" style="--color:#20222a"><span>#20222A</span></div></div>
+      <div class="ui"><div><p class="eyebrow">A room for everyone</p><h3 class="headline">The best part is watching together.</h3><p class="body">Start a room, share the link, and settle in. Your playbacks stay perfectly in sync.</p><div class="buttons"><button class="btn btn-primary">Create a room</button><button class="btn btn-secondary">How it works</button></div></div><div class="card"><p class="card-label">Friends watching now</p><p class="card-value">2,408 rooms</p><p class="card-sub">● Live right now</p></div></div><div class="contrast"><span>Text 13.1:1</span><span>Primary 6.4:1</span><span>Surface 18.5:1</span></div>
+    </section>
+
+    <section class="palette" style="--bg:#f1f7f6;--card:#fff;--fg:#132322;--primary:#277b78;--primary-fg:#fff;--colors:#f1f7f6,#fff,#277b78,#78bcb6,#132322">
+      <div class="palette-header"><h2><span class="number">5</span>Sea Glass</h2><p class="vibe">fresh · composed · social</p></div>
+      <div class="swatches"><div class="swatch" style="--color:#f1f7f6"><span>#F1F7F6</span></div><div class="swatch" style="--color:#fff"><span>#FFFFFF</span></div><div class="swatch" style="--color:#277b78"><span>#277B78</span></div><div class="swatch" style="--color:#78bcb6"><span>#78BCB6</span></div><div class="swatch" style="--color:#132322"><span>#132322</span></div></div>
+      <div class="ui"><div><p class="eyebrow">A room for everyone</p><h3 class="headline">The best part is watching together.</h3><p class="body">Start a room, share the link, and settle in. Your playbacks stay perfectly in sync.</p><div class="buttons"><button class="btn btn-primary">Create a room</button><button class="btn btn-secondary">How it works</button></div></div><div class="card"><p class="card-label">Friends watching now</p><p class="card-value">2,408 rooms</p><p class="card-sub">● Live right now</p></div></div><div class="contrast"><span>Text 14.7:1</span><span>Primary 5.0:1</span><span>Surface 18.6:1</span></div>
+    </section>
+
+    <section class="palette" style="--bg:#f8f5ff;--card:#fff;--fg:#211b32;--primary:#7652a8;--primary-fg:#fff;--colors:#f8f5ff,#fff,#7652a8,#b79ad9,#211b32">
+      <div class="palette-header"><h2><span class="number">6</span>Soft Focus</h2><p class="vibe">luxe · creative · gentle</p></div>
+      <div class="swatches"><div class="swatch" style="--color:#f8f5ff"><span>#F8F5FF</span></div><div class="swatch" style="--color:#fff"><span>#FFFFFF</span></div><div class="swatch" style="--color:#7652a8"><span>#7652A8</span></div><div class="swatch" style="--color:#b79ad9"><span>#B79AD9</span></div><div class="swatch" style="--color:#211b32"><span>#211B32</span></div></div>
+      <div class="ui"><div><p class="eyebrow">A room for everyone</p><h3 class="headline">The best part is watching together.</h3><p class="body">Start a room, share the link, and settle in. Your playbacks stay perfectly in sync.</p><div class="buttons"><button class="btn btn-primary">Create a room</button><button class="btn btn-secondary">How it works</button></div></div><div class="card"><p class="card-label">Friends watching now</p><p class="card-value">2,408 rooms</p><p class="card-sub">● Live right now</p></div></div><div class="contrast"><span>Text 14.0:1</span><span>Primary 5.2:1</span><span>Surface 18.8:1</span></div>
+    </section>
+    <p class="footer">Pick 1–6 and tell me “I’ll take 3”, ask for “more like 2 but warmer”, or say “none”.</p>
+  </main>
+  <script>
+    const toggle = document.querySelector('#theme-toggle');
+    toggle.addEventListener('click', () => {
+      const dark = document.documentElement.dataset.theme === 'dark';
+      document.documentElement.dataset.theme = dark ? 'light' : 'dark';
+      toggle.textContent = dark ? 'Switch to dark' : 'Switch to light';
+    });
+  </script>
+</body>
+</html>

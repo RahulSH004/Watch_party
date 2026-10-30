@@ -1,1 +1,182 @@
+
 @import "tailwindcss";
+@import "@fontsource-variable/manrope";
+@import "@fontsource-variable/jetbrains-mono";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Typography */
+  --font-sans: "Manrope Variable", sans-serif;
+  --font-heading: "Manrope Variable", sans-serif;
+  --font-mono: "JetBrains Mono Variable", monospace;
+
+  /* Brand colors */
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-soft: var(--brand-soft);
+  --color-indigo: var(--indigo);
+
+  /* shadcn semantic colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Radius */
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Charts */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Sidebar */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  color-scheme: light;
+
+  /* Peach Cinema — warm, friendly, expressive */
+  --brand: #B94F32;
+  --brand-hover: #963B24;
+  --brand-soft: #EFA487;
+  --indigo: #B94F32;
+
+  /* Light theme */
+  --background: #F7F5F0;
+  --foreground: #241812;
+  --card: #FFFFFF;
+  --card-foreground: #241812;
+  --popover: #FFFFFF;
+  --popover-foreground: #241812;
+
+  --primary: #B94F32;
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #F9E5D8;
+  --secondary-foreground: #241812;
+
+  --muted: #F4E9DE;
+  --muted-foreground: #66544A;
+
+  --accent: #F2D0BF;
+  --accent-foreground: #241812;
+
+  --destructive: #B63C28;
+  --border: #E7D7CB;
+  --input: #E7D7CB;
+  --ring: #B94F32;
+
+  --radius: 0.75rem;
+
+  /* Charts */
+  --chart-1: #B94F32;
+  --chart-2: #EFA487;
+  --chart-3: #7B5A4B;
+  --chart-4: #D89B3D;
+  --chart-5: #963B24;
+
+  /* Sidebar */
+  --sidebar: #F4E9DE;
+  --sidebar-foreground: #241812;
+  --sidebar-primary: #B94F32;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #F9E5D8;
+  --sidebar-accent-foreground: #241812;
+  --sidebar-border: #E7D7CB;
+  --sidebar-ring: #B94F32;
+  --gradient-bg: linear-gradient(135deg, #FCF5EC 0%, #F5E9E1 100%);
+  --gradient-accent: linear-gradient(to right, #B94F32 0%, #C9784F 100%);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --background: #201614;
+  --foreground: #FFF3EC;
+  --card: #2A1D19;
+  --card-foreground: #FFF3EC;
+  --popover: #30211C;
+  --popover-foreground: #FFF3EC;
+
+  --primary: #EFA487;
+  --primary-foreground: #241812;
+
+  --secondary: #543126;
+  --secondary-foreground: #FFF3EC;
+
+  --muted: #30211C;
+  --muted-foreground: #D8A28A;
+
+  --accent: #613B2E;
+  --accent-foreground: #FFF3EC;
+
+  --destructive: #E57D67;
+  --border: #68483B;
+  --input: #68483B;
+  --ring: #EFA487;
+
+  --sidebar: #201614;
+  --sidebar-foreground: #FFF3EC;
+  --sidebar-primary: #EFA487;
+  --sidebar-primary-foreground: #241812;
+  --sidebar-accent: #613B2E;
+  --sidebar-accent-foreground: #FFF3EC;
+  --sidebar-border: #68483B;
+  --sidebar-ring: #EFA487;
+  --gradient-bg: linear-gradient(135deg, #201614 0%, #2A1C1B 100%);
+  --gradient-accent: linear-gradient(to right, #EFA487 0%, #E3B07D 100%);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+  }
+
+  code,
+  pre,
+  kbd,
+  samp {
+    font-family: var(--font-mono);
+  }
+}
